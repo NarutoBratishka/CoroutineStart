@@ -2,6 +2,7 @@ package ru.sumin.coroutinestart
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -12,8 +13,6 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-
-    private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +37,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadCity(callback: (String) -> Unit) {
         Thread.sleep(5000)
-        handler.post { callback("Moscow") }
+        Handler(Looper.getMainLooper()).post { callback("Moscow") }
     }
 
     private fun loadTemperature(city: String, callback: (Int) -> Unit) {
-        handler.post {
+        Handler(Looper.getMainLooper()).post {
             Toast.makeText(
                 this,
                 getString(R.string.loading_temperature_toast, city),
@@ -50,6 +49,6 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
         Thread.sleep(5000)
-        handler.post { callback(17) }
+        Handler(Looper.getMainLooper()).post { callback(17) }
     }
 }
