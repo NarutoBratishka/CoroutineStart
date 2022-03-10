@@ -1,28 +1,15 @@
 package ru.sumin.coroutinestart
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import ru.sumin.coroutinestart.databinding.ActivityMainBinding
 
-val TEST_TAG: String = "test"
-
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
-    }
-
-    private val handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            Log.d(TEST_TAG, msg.toString())
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         binding.buttonLoad.setOnClickListener {
             loadData()
         }
-        handler.handleMessage(Message.obtain(handler, 0, 21))
     }
 
     private fun loadData() {
