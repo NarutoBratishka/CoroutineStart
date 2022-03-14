@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import ru.sumin.coroutinestart.databinding.ActivityMainBinding
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,19 +35,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadCity(callback: (String) -> Unit) {
-        Thread.sleep(5000)
-        runOnUiThread { callback("Moscow") }
+        thread {
+            Thread.sleep(5000)
+            runOnUiThread { callback("Moscow") }
+        }
     }
 
     private fun loadTemperature(city: String, callback: (Int) -> Unit) {
-        runOnUiThread {
-            Toast.makeText(
-                this,
-                getString(R.string.loading_temperature_toast, city),
-                Toast.LENGTH_SHORT
-            ).show()
+        thread {
+            runOnUiThread {
+                Toast.makeText(
+                    this,
+                    getString(R.string.loading_temperature_toast, city),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            Thread.sleep(5000)
+            runOnUiThread { callback(17) }
         }
-        Thread.sleep(5000)
-        runOnUiThread { callback(17) }
     }
 }
